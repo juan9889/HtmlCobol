@@ -11,7 +11,7 @@ using HtmlCOBOL;
 class HttpServer
 {
     public static HttpListener listener;
-    public static string url = "http://localhost:8000/";
+    public static string url = "http://localhost:6969/";
     public static int pageViews = 0;
     public static int requestCount = 0;
     public static string pageData =
