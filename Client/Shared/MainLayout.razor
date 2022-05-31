@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+@inject HttpClient _http
+
+<div class="page">
+    <article class="content px-4">
+        @((MarkupString)pagedata)
+    </article>
+</div>
+
+@code{
+    string pagedata = "Parsing...";
+    protected override async Task OnInitializedAsync()
+    {
+        string pre_rendered = await _http.GetStringAsync("example.html");
+        //pagedata = Client.Reader.PageReader.ReadPage("css/example.html");
+        pagedata = Client.Reader.PageReader.ReadPage(pre_rendered);
+        StateHasChanged();
+    }
+}
