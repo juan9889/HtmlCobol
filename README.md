@@ -37,5 +37,5 @@ Due security features, you can't just open the html files and serve local resour
 
 4- deploy the files in /Client/bin/Release/net6.0/publish/wwwroot in a server
 
-5- create a 'example.html' file that contains cobol code in the same folder that contains index.html
+5- create an 'example.html' file that contains cobol code in the same folder that contains index.html
 
