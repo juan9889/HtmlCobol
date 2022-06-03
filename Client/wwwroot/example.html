@@ -7,19 +7,27 @@
               WORKING-STORAGE SECTION.
               01 SOME-NUMBER PIC S9(3).
               01 NAME PIC A(10).
+              01 APELLIDO PIC A(10).
             PROCEDURE DIVISION.
 ~>
 <body>
 Cobol HTML
 <br/>
-<~SET SOME-NUMBER AS 100.~>
-<~SET NAME AS JORGITO.~>
+<~SET SOME-NUMBER AS 5.~>
+<~SET NAME AS Juan.~>
+<~SET APELLIDO AS Lopez.~>
 This is the first value of the number <~DISPLAY SOME-NUMBER.~>
 <br/>
 <~COMPUTE SOME-NUMBER = 100 + 300.~>
 This is the second value of the number <~DISPLAY SOME-NUMBER.~>
 <br/>
 <br/>
-Hello : <~DISPLAY NAME.~>
+Hola : <~DISPLAY NAME.~> <~DISPLAY APELLIDO.~>
+<br/>
+<br/>
+This button will do something
+<br/>
+<br/>
+<a role="button" href="/something_result" class="btn btn-success">Do something</a>
 </body>
 </html>

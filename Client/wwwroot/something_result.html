@@ -1,0 +1,19 @@
+<html>
+<~
+  IDENTIFICATION DIVISION.
+            PROGRAM-ID. COBOLHTML.
+
+            DATA DIVISION.
+              WORKING-STORAGE SECTION.
+              01 RESULT PIC A(10).
+            PROCEDURE DIVISION.
+~>
+<body>
+Something happened
+<br/>
+<~SET RESULT AS 200.~>
+You have been redirected. Status code : <~.DISPLAY RESULT.~>
+<br/>
+<a role="button" href="/example" class="btn btn-info">Go back</a>
+</body>
+</html>

@@ -1,10 +1,43 @@
 ﻿@page "/"
+@page "/{url_par}"
+@inject HttpClient _http
+@((MarkupString)pagedata)
+@code{
+    [Parameter]
+    public string url_par { get; set; }
+    string pagedata = "Parsing...";
+    protected override async Task OnInitializedAsync()
+    {
+        while (true)
+        {
+            Refresh();
+            await Task.Delay(1500);
+        }
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+    }
+    private async void Refresh()
+    {
+        if (url_par != "")
+        {
+            string pre_rendered = "";
+            try
+            {
+                pre_rendered = await _http.GetStringAsync(url_par + ".html");
+                pagedata = Client.Reader.PageReader.ReadPage(pre_rendered);
+            }
+            catch (Exception)
+            {
+                pagedata = "Nothing here, try /example";
+            }
+            
 
-Welcome to your new app.
+            StateHasChanged();
+        }
+        else
+        {
+            pagedata = "Nothing here, try /example";
+        }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
-
+    }
+    }
