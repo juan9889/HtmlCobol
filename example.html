@@ -1,4 +1,6 @@
 <html>
+<head>
+<link rel="stylesheet" href="https://unpkg.com/chota@latest">
 <~
   IDENTIFICATION DIVISION.
             PROGRAM-ID. COBOLHTML.
@@ -7,19 +9,29 @@
               WORKING-STORAGE SECTION.
               01 SOME-NUMBER PIC S9(3).
               01 NAME PIC A(10).
+              01 APELLIDO PIC A(10).
             PROCEDURE DIVISION.
 ~>
+</head>
 <body>
 Cobol HTML
 <br/>
-<~SET SOME-NUMBER AS 100.~>
-<~SET NAME AS JORGITO.~>
+<~SET SOME-NUMBER AS 10.~>
+<~SET NAME AS Juan.~>
+<~SET APELLIDO AS Lopez.~>
+
 This is the first value of the number <~DISPLAY SOME-NUMBER.~>
 <br/>
-<~COMPUTE SOME-NUMBER = 100 + 300.~>
-This is the second value of the number <~DISPLAY SOME-NUMBER.~>
+<~COMPUTE SOME-NUMBER = SOME-NUMBER + 1.~>
+This is the value of the number after increment <~DISPLAY SOME-NUMBER.~>
 <br/>
 <br/>
-Hello : <~DISPLAY NAME.~>
+Hola : <~DISPLAY NAME.~> <~DISPLAY APELLIDO.~>
+<br/>
+<br/>
+This button will do something
+<br/>
+<br/>
+<a  href="/something_result" class="button primary">Do something</a>
 </body>
 </html>

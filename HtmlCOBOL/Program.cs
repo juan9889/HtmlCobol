@@ -14,19 +14,9 @@ class HttpServer
     public static string url = "http://localhost:6969/";
     public static int pageViews = 0;
     public static int requestCount = 0;
-    public static string pageData =
-        "<!DOCTYPE>" +
-        "<html>" +
-        "  <head>" +
-        "    <title>HttpListener Example</title>" +
-        "  </head>" +
-        "  <body>" +
-        "    <p>Page Views: {0}</p>" +
-        "    <form method=\"post\" action=\"shutdown\">" +
-        "      <input type=\"submit\" value=\"Shutdown\" {1}>" +
-        "    </form>" +
-        "  </body>" +
-        "</html>";
+    //Edit this with your custom path
+    public static string base_dir = "/Users/juan/Projects/HtmlCOBOL/";
+    public static string pageData = "";
 
     
 
@@ -37,7 +27,8 @@ class HttpServer
         // While a user hasn't visited the `shutdown` url, keep on handling requests
         while (runServer)
         {
-            pageData = HtmlCOBOL.PageReader.ReadPage("/Users/juan/Projects/HtmlCOBOL/example.html");
+
+            
             // Will wait here until we hear from a connection
             HttpListenerContext ctx = await listener.GetContextAsync();
 
@@ -64,6 +55,14 @@ class HttpServer
             if (req.Url.AbsolutePath != "/favicon.ico")
                 pageViews += 1;
 
+            try
+            {
+                pageData = HtmlCOBOL.PageReader.ReadPage(base_dir + req.Url.AbsolutePath + ".html");
+            }
+            catch
+            {
+                pageData = "Nothing here, try /example";
+            }
             // Write the response info
             string disableSubmit = !runServer ? "disabled" : "";
             byte[] data = Encoding.UTF8.GetBytes(String.Format(pageData, pageViews, disableSubmit));

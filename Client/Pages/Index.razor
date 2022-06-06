@@ -1,17 +1,20 @@
 ﻿@page "/"
 @page "/{url_par}"
 @inject HttpClient _http
+@inject NavigationManager NavManager
 @((MarkupString)pagedata)
 @code{
     [Parameter]
     public string url_par { get; set; }
+    bool hot_reload = true;
     string pagedata = "Parsing...";
     protected override async Task OnInitializedAsync()
     {
-        while (true)
+        
+        while (hot_reload)
         {
             Refresh();
-            await Task.Delay(1500);
+            await Task.Delay(500);
         }
 
 
@@ -30,7 +33,7 @@
             {
                 pagedata = "Nothing here, try /example";
             }
-            
+
 
             StateHasChanged();
         }
@@ -40,4 +43,4 @@
         }
 
     }
-    }
+}

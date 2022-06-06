@@ -8,7 +8,7 @@ namespace Cobol
         {
 			String[] statements;
 			string result = "";
-            //slash the cobol code in statements
+            //split the cobol code in statements
             try
             {
 				statements = cobol_code.Split(".");
@@ -19,14 +19,32 @@ namespace Cobol
                 return "Error while splitting code in statements";
             }
             //Interpret every statement
-            foreach(string statement in statements)
+            //
+            //foreach(string statement in statements)
+            program.IC = 0;
+            while(program.IC<statements.Length-1)
             {
-                string curr_result = InterpretStatement(statement);
+                
+                string curr_result = InterpretStatement(statements[program.IC]);
                 if (curr_result != "")
                 {
+                    if (curr_result.Contains("$GOTO_RESULT="))
+                    {
+                        string line_str = curr_result.Substring(13, curr_result.Length-13);
+                        int line_to_jump=int.Parse(line_str);
+                        if (line_to_jump <= statements.Length)
+                        {
+                            program.IC = line_to_jump;
+                            Console.WriteLine("JMP TO " + line_to_jump.ToString());
+                        }
+                       
+                        curr_result = "";
+                    }
+                    
                     result = result + Environment.NewLine;
                     result = result + curr_result;
                 }
+                program.IC++;
             }
 			return result;
         }
@@ -63,6 +81,9 @@ namespace Cobol
                 case "PERFORM":
                     result = this.Perform(statement);
                     break;
+                case "GOTO":
+                    result = this.Goto(statement);
+                    break;
                 default:
                     break;
             }
@@ -74,25 +95,59 @@ namespace Cobol
 
         private string Compute(string statement)
         {
+            //Only works with 2 operands for now
             string result = "";
             string[] words;
             words = statement.Split(" ");
             string var_to_compute = words[1];
             string v1 = words[3];
             string v2 = words[5];
+            double v1_num=0;
+            double v2_num=0;
 
-            switch(words[4]){
+            //try parsing this, if it fails, try getting a value, if this also fails return null
+            try
+            {
+                v1_num = double.Parse(v1);
+            }
+            catch
+            {
+                try
+                {
+                    v1_num = double.Parse(program.getValue(v1));
+                }
+                catch
+                {
+                    //Not a number, or a variable
+                }
+            }
+            try
+            {
+                v2_num = double.Parse(v2);
+            }
+            catch
+            {
+                try
+                {
+                    v2_num = double.Parse(program.getValue(v2));
+                }
+                catch
+                {
+                    //Not a number, or a variable
+                }
+            }
+            switch (words[4]){
                 case "+":
-                    result = ((double.Parse(v1) + double.Parse(v2)).ToString());
+                    result = (v1_num+v2_num).ToString();
                     break;
                 case "-":
-                    result = ((double.Parse(v1) - double.Parse(v2)).ToString());
+                    result = (v1_num-v2_num).ToString();
                     break;
                 case "x":
-                    result = ((double.Parse(v1) * double.Parse(v2)).ToString());
+                    result = (v1_num*v2_num).ToString();
                     break;
-                case "%":
-                    result = ((double.Parse(v1) / double.Parse(v2)).ToString());
+                case "/":
+                    result = (v1_num/v2_num).ToString();
                     break;
             }
             program.setValue(var_to_compute, result);
@@ -107,6 +162,16 @@ namespace Cobol
             // -Perform N TIMES
             //
             string result = "";
+
+            return result;
+        }
+
+        private string Goto(string statement)
+        {
+            string result = "";
+            string[] words;
+            words = statement.Split(" ");
+            result = "$GOTO_RESULT=" + words[1];
             return result;
         }
 	}

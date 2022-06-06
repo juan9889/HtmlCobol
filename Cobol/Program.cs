@@ -3,6 +3,7 @@ public class Program
 {
     public string Name { get; set; }
     List<Variable> variables = new();
+    public int IC = 0;//instruction counter
 
     public string getValue(string var_name)
     {
