@@ -4,7 +4,7 @@ Cobol inside Html
 Works server-side as a .net cli application and client-side as a WASM browser app
 
 # Supported keywords (for now)
-SET, DISPLAY, COMPUTE
+SET, DISPLAY, COMPUTE, GOTO(in progress)
 
 ![Captura de Pantalla 2022-05-18 a la(s) 14 44 35](https://user-images.githubusercontent.com/48728949/169167250-45dc08a5-06a4-403a-8ebf-d1a855baebfc.png)
 
