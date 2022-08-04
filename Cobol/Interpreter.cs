@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+
 namespace Cobol
 {
 	public class Interpreter
@@ -6,6 +8,10 @@ namespace Cobol
         Program program;
 		public string InterpretCobol(string cobol_code)
         {
+            string code_aux = spaces_formatting(cobol_code);
+            Console.WriteLine("code = "+code_aux);
+            cobol_code = code_aux;
+            code_aux = "";
 			String[] statements;
 			string result = "";
             //split the cobol code in statements
@@ -172,6 +178,13 @@ namespace Cobol
             string[] words;
             words = statement.Split(" ");
             result = "$GOTO_RESULT=" + words[1];
+            return result;
+        }
+        private string spaces_formatting(string cobol_code)
+        {
+            string result= Regex.Replace(cobol_code, @"\s+", " ");
+            result = result.Replace("\n", "");
+            
             return result;
         }
 	}

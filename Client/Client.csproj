@@ -22,5 +22,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reader\" />
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\css\" />
   </ItemGroup>
 </Project>
